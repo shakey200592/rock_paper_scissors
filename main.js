@@ -1,15 +1,16 @@
 // Variables
 
 const choices = ["rock", "paper", "scissors"]; // Store choices in a string array
-
-let computer_score;
-let player_score;
-
-console.log(getWinner(getComputerChoice(choices), getHumanChoice()));
+let computerScore = 0;
+let playerScore = 0;
+let numberOfRounds = 5
 
 
+// Main game code
+playGame(numberOfRounds);
 
 
+// Functions for game functionality
 function getComputerChoice(arr_of_choices) {
   // This function returns a random string from the values stored in the "choices" array
 
@@ -21,72 +22,127 @@ function getComputerChoice(arr_of_choices) {
   return randomeChoice;
 }
 
-function getHumanChoice() {
+function getPlayerChoice() {
 /* 
-  This function returns a string based on the number that is input to the string.
-  There is Error checking to ensure that only a number can be entered and keeps
-  asking for an input until a correct value is entered (number between 0 and 2)
+  This function returns a number based on the string entered
+  rock = 0, paper = 1, scissors = 2. input is case insensitive
+  thanks to the .toLowerCase() in-built function.
 */
-
   let playerChoice;
 
+  // Keeps asking for an input until it matches one of the values in choices array
   do 
   {
-    playerChoice = parseInt(prompt("Please enter a value between 0 and 2 (0 = Rock, 1 = Paper, 2 = Scissors)"));
-  } while (isNaN(playerChoice) || playerChoice > 2 || playerChoice < 0);
+    playerChoice = prompt("Please type either 'rock', 'paper' 'scissors' (case insensitive)").toLowerCase();
+  } while (choices.includes(playerChoice) == false)
+
+  playerChoice = choices.indexOf(playerChoice);
+
   return playerChoice;
 }
 
-function getWinner(computer_choice, player_choice)
+function playRound(computerChoice, playerChoice)
 {
-  console.log(computer_choice);
-  console.log(player_choice);
+  // This function includes if statements for all possible outcomes and
+  // outputs 0 for a draw 1 for computer win and 2 for a player win
+  console.log(computerChoice);
+  console.log(playerChoice);
   // draw, return 0
-  if (computer_choice == player_choice)
+  if (computerChoice == playerChoice)
   {
-    console.log(`Computer choice (${computer_choice}): ${choices[computer_choice]}\nPlayer Choice (${player_choice}): ${choices[player_choice]}\nDraw`);
+    console.log(`Computer choice (${computerChoice}): ${choices[computerChoice]}\nPlayer Choice (${playerChoice}): ${choices[playerChoice]}\nDraw`);
     return 0;
   }
 
   // computer=rock and player=paper (player wins, return 2)
-  else if (computer_choice == 0 && player_choice == 1 )
+  else if (computerChoice == 0 && playerChoice == 1 )
     {
-      console.log(`Computer choice (${computer_choice}): ${choices[computer_choice]}\nPlayer Choice (${player_choice}): ${choices[player_choice]}\nPlayer Wins`);
+      console.log(`Computer choice (${computerChoice}): ${choices[computerChoice]}\nPlayer Choice (${playerChoice}): ${choices[playerChoice]}\nPaper Beats Rock (Player Wins)`);
       return 2;
     }
 
   // computer=rock and player=scissors (computer wins, return 1)
-  else if (computer_choice == 0 && player_choice == 2 )
+  else if (computerChoice == 0 && playerChoice == 2 )
     {
-      console.log(`Computer choice (${computer_choice}): ${choices[computer_choice]}\nPlayer Choice (${player_choice}): ${choices[player_choice]}\nComputer Wins`);
+      console.log(`Computer choice (${computerChoice}): ${choices[computerChoice]}\nPlayer Choice (${playerChoice}): ${choices[playerChoice]}\nRock Beats Scissors (Computer Wins)`);
       return 1;
     }
 
   // computer=paper and player=rock (computer wins, return 1)
-  else if (computer_choice == 1 && player_choice == 0 )
+  else if (computerChoice == 1 && playerChoice == 0 )
     {
-      console.log(`Computer choice (${computer_choice}): ${choices[computer_choice]}\nPlayer Choice (${player_choice}): ${choices[player_choice]}\nComputer Wins`);
+      console.log(`Computer choice (${computerChoice}): ${choices[computerChoice]}\nPlayer Choice (${playerChoice}): ${choices[playerChoice]}\nPaper Beats Rock (Computer Wins)`);
       return 1;
     }
 
   // computer=paper and player=scissors (player wins, return 2)
-  else if (computer_choice == 1 && player_choice == 2 )
+  else if (computerChoice == 1 && playerChoice == 2 )
     {
-      console.log(`Computer choice (${computer_choice}): ${choices[computer_choice]}\nPlayer Choice (${player_choice}): ${choices[player_choice]}\nPlayer Wins`);
+      console.log(`Computer choice (${computerChoice}): ${choices[computerChoice]}\nPlayer Choice (${playerChoice}): ${choices[playerChoice]}\nScissors Beat Paper (Player Wins)`);
       return 2;
     }
 
     // computer=scissors and player=rock (player wins, return 2)
-  else if (computer_choice == 2 && player_choice == 0 )
+  else if (computerChoice == 2 && playerChoice == 0 )
     {
-      console.log(`Computer choice (${computer_choice}): ${choices[computer_choice]}\nPlayer Choice (${player_choice}): ${choices[player_choice]}\nPlayer Wins`);
+      console.log(`Computer choice (${computerChoice}): ${choices[computerChoice]}\nPlayer Choice (${playerChoice}): ${choices[playerChoice]}\nRock Beats Scissors (Player Wins)`);
       return 2;
     }
 
   // computer=scissors and player=paper (computer wins, return 2)
-  else if (computer_choice == 2 && player_choice == 1 )
+  else if (computerChoice == 2 && playerChoice == 1 )
     {
-      console.log(`Computer choice (${computer_choice}): ${choices[computer_choice]}\nPlayer Choice (${player_choice}): ${choices[player_choice]}\nComputer Wins`);
+      console.log(`Computer choice (${computerChoice}): ${choices[computerChoice]}\nPlayer Choice (${playerChoice}): ${choices[playerChoice]}\nScissors Beat Paper (Computer Wins)`);
       return 1;
     }
+}
+
+function updateScore()
+{
+  // This functions updates the player and computer scores for each round
+  let game_winner = playRound(getComputerChoice(choices), getPlayerChoice());
+
+  if (game_winner == 0)
+    {
+      computerScore++;
+      playerScore++;
+    }
+  
+  else if (game_winner == 1)
+    {
+      computerScore++;
+    }
+  
+  else if (game_winner == 2)
+    {
+      playerScore++;
+    }
+}
+
+function playGame(numberOfRounds)
+{
+  /* This function loops through the updateScore() function depending on the value of the
+     numberOfRounds parameter. for example numberOfRounds = 5 would create 5 rounds
+  */
+  for (let round = 0; round < numberOfRounds; round++)
+    {
+      console.log(`Round ${round+1}\n`) // Displays current round
+      updateScore();
+    }
+
+    console.log(`Computer Score: ${computerScore}\nPlayer Score: ${playerScore}`)
+
+    if (computerScore > playerScore)
+      {
+        console.log("Computer Wins!");
+      }
+    else if (computerScore < playerScore)
+      {
+        console.log("Player Wins!");
+      }
+    else if (computerScore == playerScore)
+      {
+        console.log("Draw!")
+      }
+
 }
