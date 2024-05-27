@@ -1,9 +1,12 @@
-const choices = ["rock", "paper", "scissors"]; // Store choices in a string array
-
 function getComputerChoice(arr_of_choices) {
   // This function returns a random string from the values stored in the "choices" array
-  let randomeChoice = Math.floor(Math.random() * arr_of_choices.length); // Select random number between 0 and 2
-  return `Computer Choice (${randomeChoice}): ${choices[randomeChoice].charAt(0).toUpperCase()+choices[randomeChoice].slice(1)}`; // return one of the three values stores in the array based on the index
+
+  // Select random number between 0 and 2
+  let randomeChoice = Math.floor(Math.random() * arr_of_choices.length); 
+
+  // Returns string based on the "arr_of_choices" parameter
+  // and returns a string with the first char capitalised
+  return `Computer Choice (${randomeChoice}): ${capitalise_first_letter(choices[randomeChoice])}`;
 }
 
 function getHumanChoice(arr_of_choices) {
@@ -19,7 +22,16 @@ function getHumanChoice(arr_of_choices) {
   {
     playerChoice = parseInt(prompt("Please enter a value between 0 and 2 (0 = Rock, 1 = Paper, 2 = Scissors)"));
   } while (isNaN(playerChoice) || playerChoice > 2 || playerChoice < 0);
-  return playerChoice;
+  return `Player Choice (${playerChoice}): ${capitalise_first_letter(choices[playerChoice])}`;
 }
+
+function capitalise_first_letter(string_to_capitalise)
+{
+  return (string_to_capitalise.charAt(0).toUpperCase()+string_to_capitalise.slice(1));
+}
+
+const choices = ["rock", "paper", "scissors"]; // Store choices in a string array
+console.log(getComputerChoice(choices));
+console.log(getHumanChoice(choices));
 
 
