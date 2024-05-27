@@ -5,7 +5,9 @@ const choices = ["rock", "paper", "scissors"]; // Store choices in a string arra
 let computer_score;
 let player_score;
 
-console.log(getWinner(getComputerChoice(choices), getHumanChoice(choices)));
+console.log(getWinner(getComputerChoice(choices), getHumanChoice()));
+
+
 
 
 function getComputerChoice(arr_of_choices) {
@@ -19,7 +21,7 @@ function getComputerChoice(arr_of_choices) {
   return randomeChoice;
 }
 
-function getHumanChoice(arr_of_choices) {
+function getHumanChoice() {
 /* 
   This function returns a string based on the number that is input to the string.
   There is Error checking to ensure that only a number can be entered and keeps
@@ -37,6 +39,8 @@ function getHumanChoice(arr_of_choices) {
 
 function getWinner(computer_choice, player_choice)
 {
+  console.log(computer_choice);
+  console.log(player_choice);
   // draw, return 0
   if (computer_choice == player_choice)
   {
@@ -47,42 +51,42 @@ function getWinner(computer_choice, player_choice)
   // computer=rock and player=paper (player wins, return 2)
   else if (computer_choice == 0 && player_choice == 1 )
     {
-      console.log(`Computer choice (${computer_choice}): ${choices[computer_choice]}\nPlayer Choice (${player_choice}): ${choices[player_choice]}\n Player Wins`);
+      console.log(`Computer choice (${computer_choice}): ${choices[computer_choice]}\nPlayer Choice (${player_choice}): ${choices[player_choice]}\nPlayer Wins`);
       return 2;
     }
 
   // computer=rock and player=scissors (computer wins, return 1)
   else if (computer_choice == 0 && player_choice == 2 )
     {
-      console.log(`Computer choice (${computer_choice}): ${choices[computer_choice]}\nPlayer Choice (${player_choice}): ${choices[player_choice]}\n Computer Wins`);
+      console.log(`Computer choice (${computer_choice}): ${choices[computer_choice]}\nPlayer Choice (${player_choice}): ${choices[player_choice]}\nComputer Wins`);
       return 1;
     }
 
-  // computer=paper and player=rock (player wins, return 2)
-  else if (computer_choice == 1 && player_choice == 2 )
+  // computer=paper and player=rock (computer wins, return 1)
+  else if (computer_choice == 1 && player_choice == 0 )
     {
-      console.log(`Computer choice (${computer_choice}): ${choices[computer_choice]}\nPlayer Choice (${player_choice}): ${choices[player_choice]}\n Player Wins`);
-      return 2;
+      console.log(`Computer choice (${computer_choice}): ${choices[computer_choice]}\nPlayer Choice (${player_choice}): ${choices[player_choice]}\nComputer Wins`);
+      return 1;
     }
 
-  // computer=rock and player=scissors (player wins, return 2)
-  else if (computer_choice == 0 && player_choice == 2 )
+  // computer=paper and player=scissors (player wins, return 2)
+  else if (computer_choice == 1 && player_choice == 2 )
     {
-      console.log(`Computer choice (${computer_choice}): ${choices[computer_choice]}\nPlayer Choice (${player_choice}): ${choices[player_choice]}\n Player Wins`);
+      console.log(`Computer choice (${computer_choice}): ${choices[computer_choice]}\nPlayer Choice (${player_choice}): ${choices[player_choice]}\nPlayer Wins`);
       return 2;
     }
 
     // computer=scissors and player=rock (player wins, return 2)
   else if (computer_choice == 2 && player_choice == 0 )
     {
-      console.log(`Computer choice (${computer_choice}): ${choices[computer_choice]}\nPlayer Choice (${player_choice}): ${choices[player_choice]}\n Player Wins`);
+      console.log(`Computer choice (${computer_choice}): ${choices[computer_choice]}\nPlayer Choice (${player_choice}): ${choices[player_choice]}\nPlayer Wins`);
       return 2;
     }
 
   // computer=scissors and player=paper (computer wins, return 2)
-  else if (computer_choice == 2 && player_choice == 2 )
+  else if (computer_choice == 2 && player_choice == 1 )
     {
-      console.log(`Computer choice (${computer_choice}): ${choices[computer_choice]}\nPlayer Choice (${player_choice}): ${choices[player_choice]}\n Computer Wins`);
+      console.log(`Computer choice (${computer_choice}): ${choices[computer_choice]}\nPlayer Choice (${player_choice}): ${choices[player_choice]}\nComputer Wins`);
       return 1;
     }
 }
