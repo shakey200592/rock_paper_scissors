@@ -3,7 +3,7 @@
 const choices = ["rock", "paper", "scissors"]; // Store choices in a string array
 let computerScore = 0;
 let playerScore = 0;
-let numberOfRounds = 5
+let numberOfRounds = 5;
 
 
 // Main game code
@@ -102,13 +102,7 @@ function updateScore()
   // This functions updates the player and computer scores for each round
   let game_winner = playRound(getComputerChoice(choices), getPlayerChoice());
 
-  if (game_winner == 0)
-    {
-      computerScore++;
-      playerScore++;
-    }
-  
-  else if (game_winner == 1)
+  if (game_winner == 1)
     {
       computerScore++;
     }
