@@ -54,45 +54,17 @@ function playRound(computerChoice, playerChoice)
     return 0;
   }
 
-  // computer=rock and player=paper (player wins, return 2)
-  else if (computerChoice == 0 && playerChoice == 1 )
+  // player wins, return 2
+  else if (computerChoice == 0 && playerChoice == 1 || computerChoice == 1 && playerChoice == 2 || computerChoice == 2 && playerChoice == 0 )
     {
-      console.log(`Computer choice (${computerChoice}): ${choices[computerChoice]}\nPlayer Choice (${playerChoice}): ${choices[playerChoice]}\nPaper Beats Rock (Player Wins)`);
+      console.log(`Computer choice (${computerChoice}): ${choices[computerChoice]}\nPlayer Choice (${playerChoice}): ${choices[playerChoice]}\nPlayer Wins`);
       return 2;
     }
 
-  // computer=rock and player=scissors (computer wins, return 1)
-  else if (computerChoice == 0 && playerChoice == 2 )
+  // computer wins, return 1
+  else if (computerChoice == 0 && playerChoice == 2 || computerChoice == 1 && playerChoice == 0 || computerChoice == 2 && playerChoice == 1 )
     {
-      console.log(`Computer choice (${computerChoice}): ${choices[computerChoice]}\nPlayer Choice (${playerChoice}): ${choices[playerChoice]}\nRock Beats Scissors (Computer Wins)`);
-      return 1;
-    }
-
-  // computer=paper and player=rock (computer wins, return 1)
-  else if (computerChoice == 1 && playerChoice == 0 )
-    {
-      console.log(`Computer choice (${computerChoice}): ${choices[computerChoice]}\nPlayer Choice (${playerChoice}): ${choices[playerChoice]}\nPaper Beats Rock (Computer Wins)`);
-      return 1;
-    }
-
-  // computer=paper and player=scissors (player wins, return 2)
-  else if (computerChoice == 1 && playerChoice == 2 )
-    {
-      console.log(`Computer choice (${computerChoice}): ${choices[computerChoice]}\nPlayer Choice (${playerChoice}): ${choices[playerChoice]}\nScissors Beat Paper (Player Wins)`);
-      return 2;
-    }
-
-    // computer=scissors and player=rock (player wins, return 2)
-  else if (computerChoice == 2 && playerChoice == 0 )
-    {
-      console.log(`Computer choice (${computerChoice}): ${choices[computerChoice]}\nPlayer Choice (${playerChoice}): ${choices[playerChoice]}\nRock Beats Scissors (Player Wins)`);
-      return 2;
-    }
-
-  // computer=scissors and player=paper (computer wins, return 2)
-  else if (computerChoice == 2 && playerChoice == 1 )
-    {
-      console.log(`Computer choice (${computerChoice}): ${choices[computerChoice]}\nPlayer Choice (${playerChoice}): ${choices[playerChoice]}\nScissors Beat Paper (Computer Wins)`);
+      console.log(`Computer choice (${computerChoice}): ${choices[computerChoice]}\nPlayer Choice (${playerChoice}): ${choices[playerChoice]}\nComputer Wins`);
       return 1;
     }
 }
