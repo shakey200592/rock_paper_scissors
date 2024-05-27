@@ -22,4 +22,4 @@ function getHumanChoice() {
   return playerChoice;
 }
 
-console.log(getHumanChoice());
+
