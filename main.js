@@ -39,56 +39,54 @@ function createElement(parentElement, childElement, className ="", idName ="", t
 
 }
 
-function getplayerChoice () {
-  const buttons = document.querySelectorAll(".choice");
-  buttons.forEach((button) => {
-    button.addEventListener("click", (event) => {
-      playerChoiceString = document.querySelector("#player-choice")
-      playerChoiceString.textContent = `Player Choice: ${event.target.textContent}`;
-      playerChoiceInt = choices.indexOf(event.target.textContent);
-      console.log(`Player choice (${playerChoiceInt}): ${playerChoiceString.textContent}`);
-      
-    })
-  })
+function getComputerChoice(arr_of_choices) {
+  randomChoiceInt = (Math.floor(Math.random() * arr_of_choices.length));
+  randomChoiceString = arr_of_choices[randomChoiceInt];
+  let computerChoiceText = document.querySelector("#computer-choice");
+  computerChoiceText.textContent = `Computer Choice : ${randomChoiceString}`;
+  console.log(`Computer choice (${randomChoiceInt}): ${choices[randomChoiceInt]}`)
+  return randomChoiceInt;
+}
+
+function getPlayerChoice(event) {
+  playerChoiceString = document.querySelector("#player-choice")
+  playerChoiceString.textContent = `Player Choice: ${event.target.textContent}`;
+  playerChoiceInt = choices.indexOf(event.target.textContent);
+  console.log(`Player choice (${playerChoiceInt}): ${choices[playerChoiceInt]}`)
+  return playerChoiceInt;
+}
+
+function getWinner(computerChoice, playerChoice) {
+  let winner;
+
+  if (computerChoice == playerChoice) {
+    return 0;
+  }
+  else {
+    winner = computerChoice = 0 && playerChoice == 1 ||
+     computerChoice == 1 && playerChoice == 2 ||
+      computerChoice == 2 && playerChoice == 0 ? 2 : 1;
+      return winner;
+  }
+
+
 }
 
 // Functions for game functionality
-function getComputerChoice(arr_of_choices) {
+function playRound() {
   // This function returns a random string from the values stored in the "choices" array
 
   const buttons = document.querySelectorAll(".choice");
   buttons.forEach((button) => {
     button.addEventListener("click", (event) => {
-      // Select random number between 0 and 2
-      randomeChoiceInt = (Math.floor(Math.random() * arr_of_choices.length));
-      randomeChoiceString = arr_of_choices[randomeChoiceInt];
-      let computerChoiceText = document.querySelector("#computer-choice");
-      computerChoiceText.textContent = `Computer Choice: ${randomeChoiceString}`;
-      console.log(`Computer choice (${randomeChoiceInt}): ${computerChoiceText.textContent}`);
+
+      let computerChoiceInt = getComputerChoice(choices);
+      let playerChoiceInt = getPlayerChoice(event);
+
+      console.log(getWinner(computerChoiceInt, playerChoiceInt));
+
     })
   })
-}
-
-function playRound(computerChoice, playerChoice) {
-
-  return (computerChoice == 0 && playerChoice == 1 || computerChoice == 1 && playerChoice == 2 || computerChoice == 2 && playerChoice == 0) ? 2 : 1;
-
-}
-
-function updateScore()
-{
-  // This functions updates the player and computer scores for each round
-  let game_winner = playRound(getComputerChoice(choices), getPlayerChoice());
-
-  if (game_winner == 1)
-    {
-      computerScore++;
-    }
-  
-  else if (game_winner == 2)
-    {
-      playerScore++;
-    }
 }
 
 
@@ -99,19 +97,21 @@ createElement("body", "div", "button-container"); // <div class = "game-containe
 createElement("div", "button", "choice", "rock", "Rock"); // <button id="rock">
 createElement("div", "button", "choice", "paper", "Paper"); // <button id="paper">
 createElement("div", "button", "choice", "scissors", "Scissors"); // <button id="scissors">
-createElement("div", "button", "choice", "reset", "Reset Score"); 
+createElement("div", "button", "reset", "reset", "Reset Score"); 
 
 createElement("body", "div", "score-container", "", "Scoreboard: "); // <div class = "score-container"></div>
 createElement(".score-container", "p", "", "player-wins", `Player Wins: ${playerScore}`); // <p>Player Wins: {}</p>
 createElement(".score-container", "p", "", "computer-wins", `Computer Wins: ${computerScore}`);// <p>Computer Wins: {}</p>
-createElement(".score-container", "p", "", "draws", `Computer Wins: ${draws}`); //<p>Draws: <> </p>
+createElement(".score-container", "p", "", "draws", `Draws: ${draws}`); //<p>Draws: <> </p>
 
-createElement("body","p","","player-choice",`Player Choice:`);
-createElement("body","p","","computer-choice",`Computer Choice:`);
+createElement("body","div","messages");
+createElement(".messages","p","messages","player-choice",`Player Choice:`);
+createElement(".messages","p","messages","computer-choice",`Computer Choice:`);
+
+createElement(".messages","p","messages","round-winner");
 
 // Play Game
-getplayerChoice();
-getComputerChoice(choices);
+playRound(choices);
 
 
 
