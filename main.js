@@ -78,14 +78,25 @@ function updateScore(winner) {
     document.querySelector("#player-wins").textContent = `Player Wins: ${playerScore}`;
   }
 
+  const reset = document.querySelector(".reset");
+
+  reset.addEventListener("click", () => {
+    playerScore = 0;
+    computerScore = 0;
+    draws = 0;
+    document.querySelector("#player-wins").textContent = `Player Wins: ${playerScore}`
+    document.querySelector("#computer-wins").textContent = `Computer Wins: ${computerScore}`
+    document.querySelector("#draws").textContent = `Draws: ${draws}`
+
+  })
+
   
 }
 
 // Functions for game functionality
 function playRound() {
-  // This function returns a random string from the values stored in the "choices" array
-
   const buttons = document.querySelectorAll(".choice");
+
   buttons.forEach((button) => {
     button.addEventListener("click", (event) => {
 
