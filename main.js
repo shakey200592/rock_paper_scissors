@@ -37,11 +37,13 @@ function createElement(parentElement, childElement, className ="", idName ="", t
 
 }
 
+// Selects a random index from the specified array parameter
 function getComputerChoice(arr_of_choices) {
   randomChoiceInt = (Math.floor(Math.random() * arr_of_choices.length));
   return randomChoiceInt;
 }
 
+// Selects the player choice based on the button selected
 function getPlayerChoice(event) {
   let playerChoiceString = event.target.textContent;
   return choices.indexOf(playerChoiceString);
@@ -96,35 +98,26 @@ function updateScore(winner) {
 // Functions for game functionality
 function playRound() {
   const buttons = document.querySelectorAll(".choice");
+  let message = createElement(".score-container", "p", "message", "message", ``);
+  document.getElementById("message").style.display = "none";
 
   buttons.forEach((button) => {
     button.addEventListener("click", (event) => {
-
+      document.getElementById("message").style.display = "block";
       let computerChoiceInt = getComputerChoice(choices);
       let playerChoiceInt = getPlayerChoice(event);
       let winner = getWinner(computerChoiceInt,playerChoiceInt);
       updateScore(winner);
-      console.log(`Computer Choice: (${computerChoiceInt}): ${choices[computerChoiceInt]}\n
-Player Choice (${playerChoiceInt}): ${choices[playerChoiceInt]}`);
-
+      if (winner == 0) {
+        message.textContent = `Draw (${choices[computerChoiceInt]} draws with ${choices[playerChoiceInt]})`;
+      }
+      else {
+        winner == 1 ? message.textContent= `Computer Wins (${choices[computerChoiceInt]} beats ${choices[playerChoiceInt]})` : message.textContent= `Player Wins (${choices[playerChoiceInt]} beats ${choices[computerChoiceInt]})`; 
+      }
+  
     })
   })
 }
-
-
-
-
-// Create required elements, classes/ids and text content
-createElement("body", "div", "button-container"); // <div class = "game-container">
-createElement("div", "button", "choice", "rock", "Rock"); // <button id="rock">
-createElement("div", "button", "choice", "paper", "Paper"); // <button id="paper">
-createElement("div", "button", "choice", "scissors", "Scissors"); // <button id="scissors">
-createElement("div", "button", "reset", "reset", "Reset Score"); // <button id="reset">
-
-createElement("body", "div", "score-container", "", "Scoreboard: "); // <div class = "score-container"></div>
-createElement(".score-container", "p", "", "player-wins", `Player Wins: 0`); // <p>Player Wins: {}</p>
-createElement(".score-container", "p", "", "computer-wins", `Computer Wins: 0`);// <p>Computer Wins: {}</p>
-createElement(".score-container", "p", "", "draws", `Draws: 0`); //<p>Draws: <> </p>
 
 // Play Game
 playRound(choices);
