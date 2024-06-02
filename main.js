@@ -3,9 +3,7 @@ const choices = ["Rock", "Paper", "Scissors"]; // Store choices in a string arra
 let computerScore = 0;
 let playerScore = 0;
 let playerChoiceInt;
-let playerChoiceString;
-let randomeChoiceInt;
-let randomeChoiceString;
+let randomChoiceInt;
 let draws = 0;
 
 /////// Functions ///////
@@ -41,35 +39,46 @@ function createElement(parentElement, childElement, className ="", idName ="", t
 
 function getComputerChoice(arr_of_choices) {
   randomChoiceInt = (Math.floor(Math.random() * arr_of_choices.length));
-  randomChoiceString = arr_of_choices[randomChoiceInt];
-  let computerChoiceText = document.querySelector("#computer-choice");
-  computerChoiceText.textContent = `Computer Choice : ${randomChoiceString}`;
-  console.log(`Computer choice (${randomChoiceInt}): ${choices[randomChoiceInt]}`)
   return randomChoiceInt;
 }
 
 function getPlayerChoice(event) {
-  playerChoiceString = document.querySelector("#player-choice")
-  playerChoiceString.textContent = `Player Choice: ${event.target.textContent}`;
-  playerChoiceInt = choices.indexOf(event.target.textContent);
-  console.log(`Player choice (${playerChoiceInt}): ${choices[playerChoiceInt]}`)
-  return playerChoiceInt;
+  let playerChoiceString = event.target.textContent;
+  return choices.indexOf(playerChoiceString);
+  
 }
 
 function getWinner(computerChoice, playerChoice) {
-  let winner;
 
   if (computerChoice == playerChoice) {
     return 0;
   }
   else {
-    winner = computerChoice = 0 && playerChoice == 1 ||
+    return computerChoice == 0 && playerChoice == 1 ||
      computerChoice == 1 && playerChoice == 2 ||
       computerChoice == 2 && playerChoice == 0 ? 2 : 1;
-      return winner;
   }
 
 
+}
+
+function updateScore(winner) {
+  if (winner == 0) {
+    draws++;
+    document.querySelector("#draws").textContent = `Draws: ${draws}`;
+  }
+
+  else if (winner == 1) {
+    computerScore++;
+    document.querySelector("#computer-wins").textContent = `Computer Wins: ${computerScore}`;
+  }
+
+  else if (winner == 2) {
+    playerScore++;
+    document.querySelector("#player-wins").textContent = `Player Wins: ${playerScore}`;
+  }
+
+  
 }
 
 // Functions for game functionality
@@ -82,8 +91,10 @@ function playRound() {
 
       let computerChoiceInt = getComputerChoice(choices);
       let playerChoiceInt = getPlayerChoice(event);
-
-      console.log(getWinner(computerChoiceInt, playerChoiceInt));
+      let winner = getWinner(computerChoiceInt,playerChoiceInt);
+      updateScore(winner);
+      console.log(`Computer Choice: (${computerChoiceInt}): ${choices[computerChoiceInt]}\n
+Player Choice (${playerChoiceInt}): ${choices[playerChoiceInt]}`);
 
     })
   })
@@ -92,23 +103,17 @@ function playRound() {
 
 
 
-// Create required Elements, classes/ids and text content
+// Create required elements, classes/ids and text content
 createElement("body", "div", "button-container"); // <div class = "game-container">
 createElement("div", "button", "choice", "rock", "Rock"); // <button id="rock">
 createElement("div", "button", "choice", "paper", "Paper"); // <button id="paper">
 createElement("div", "button", "choice", "scissors", "Scissors"); // <button id="scissors">
-createElement("div", "button", "reset", "reset", "Reset Score"); 
+createElement("div", "button", "reset", "reset", "Reset Score"); // <button id="reset">
 
 createElement("body", "div", "score-container", "", "Scoreboard: "); // <div class = "score-container"></div>
-createElement(".score-container", "p", "", "player-wins", `Player Wins: ${playerScore}`); // <p>Player Wins: {}</p>
-createElement(".score-container", "p", "", "computer-wins", `Computer Wins: ${computerScore}`);// <p>Computer Wins: {}</p>
-createElement(".score-container", "p", "", "draws", `Draws: ${draws}`); //<p>Draws: <> </p>
-
-createElement("body","div","messages");
-createElement(".messages","p","messages","player-choice",`Player Choice:`);
-createElement(".messages","p","messages","computer-choice",`Computer Choice:`);
-
-createElement(".messages","p","messages","round-winner");
+createElement(".score-container", "p", "", "player-wins", `Player Wins: 0`); // <p>Player Wins: {}</p>
+createElement(".score-container", "p", "", "computer-wins", `Computer Wins: 0`);// <p>Computer Wins: {}</p>
+createElement(".score-container", "p", "", "draws", `Draws: 0`); //<p>Draws: <> </p>
 
 // Play Game
 playRound(choices);
